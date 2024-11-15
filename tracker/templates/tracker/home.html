@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rohit's Calorie Tracker</title>
+    <style>
+        /* Embedded CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        h1, h2, h3 {
+            color: #4ca1ae;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        form {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form input, form button {
+            padding: 10px;
+            margin: 5px;
+            width: 90%;
+            max-width: 500px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        form button {
+            background-color: #4ca1ae;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #4ca1ae;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4ca1ae;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .no-entries {
+            text-align: center;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rohit's Calorie Tracker</h1>
+        
+        <!-- Display total calories -->
+        <h3>Total Calories Consumed: {{ total_calories }} kcal</h3>
+
+        <!-- Form for adding a new calorie entry -->
+        <h2>Add New Entry</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Entry</button>
+        </form>
+
+        <!-- Display past entries -->
+        <h2>Past Calorie Entries</h2>
+        {% if entries %}
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Food Item</th>
+                <th>Calories</th>
+            </tr>
+            {% for entry in entries %}
+            <tr>
+                <td>{{ entry.date }}</td>
+                <td>{{ entry.food_item }}</td>
+                <td>{{ entry.calories }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p class="no-entries">No entries available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
